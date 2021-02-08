@@ -34,7 +34,7 @@ output:
 If you've never heard of Hans Rosling, let me immediately correct that educational oversight. He recorded a number of terrific videos before passing in 2017. This video, which is only four minutes, is one of his best. The easiest way to view this video is to hit the `Preview` button at the top of the editor. This will render this notebook as an HTML file and will embed the YouTube video in-line.
 
 ```{r fig.align='center'}
-include_graphics("includes/preview.png")
+knitr::include_graphics("includes/preview.png")
 ```
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Z8t4k0Q8e8Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -56,11 +56,6 @@ opts_chunk$set(echo = TRUE)
 
 ## Disables scientific notation.
 options(scipen=999)
-
-
-## This is the class survey data you've seen before.
-survey <- read_csv("data/ClassSurvey.csv")
-survey
 
 ## This is a subset of the data from the gapminder presentation above.
 data(gapminder)
@@ -138,6 +133,7 @@ cnt07
 Can you draw a bar plot of this data?
 
 ```{r}
+## YOUR CODE HERE!
 
 ```
 
@@ -220,12 +216,7 @@ Can you create a scatter plot showing the relationship between GDP Per Capita an
 
 ```{r}
 ## YOUR CODE HERE
-gapminder %>% 
-  filter(nato, year == 1992) %>% 
-  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) + 
-  geom_point() + 
-  ylim(50, 100) + ## SEE WHAT A DIFFERENCE THIS ONE LINE MAKES!!!!
-  theme_bw()
+
 ```
 
 
@@ -255,7 +246,11 @@ gapminder %>%
 
 - The "linear" regression summary looks good.
 - But . . . it isn't.
+    - Our p-value is less than .05.
+    - But we are explaining less than 50% of the variation in the data.
+    - Something is not right here.
 - The relationship is bent!
+- [Wikipedia Anscombe's Quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet)
 
 ```{r}
 gapminder <- 
@@ -278,14 +273,3 @@ gapminder %>%
 ```
 
 That's better.
-
-
-## YOUR TURN
-
-Can you create a column identifying Public Health students in our class?
-
-```{r}
-survey %>% select(DegreeProgram) %>% distinct()
-
-```
-
