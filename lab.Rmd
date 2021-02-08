@@ -1,0 +1,158 @@
+---
+title: "Texas Housing"
+author: "Intro to Data Science"
+date: "Week 04"
+output: html_notebook
+---
+
+An opportunity to practice some grouping, sorting, and mutating.
+
+# Setup
+
+Run the code-chunk below to load everything you need for tonight's lab.
+
+```{r}
+rm(list = ls()) ## Deletes anything you may have created earlier, freeing up RAM.
+library(knitr)
+library(tidyverse)
+
+## Show all the code from here down.
+opts_chunk$set(echo = TRUE)
+
+## Disables scientific notation.
+options(scipen=999)
+
+## This is a subset of the data from the gapminder presentation above.
+data(txhousing)
+txhousing
+```
+
+
+Each row of data information on a single month's worth of sales. So, we could say this is data is at the city/month grain.
+
+- For more help on the data `?txhousing` in the console pane.
+
+# Abilene
+
+## Task 01
+
+How many rows of data do we have about Abilene Texas?
+
+- Think about `filter()`
+- Remember to wrap your string in quotes.
+- You must use `==` to perform a Boolean test!
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+## Task 02
+
+In what year/month did Abilene have the highest volume of sales?
+
+- This is easier if you used `filter()` for Task 01.
+- If you did, you only need to add one thing to your Task 01 code to answer this question.
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+## Task 03
+
+How many houses (total) were sold in Abilene in 2010?
+
+- To solve this, you will have to change the grain of the data.
+- You can solve this problem with either `filter` or `group_by`, although `filter` is arguably more elegant.
+    - To have more than one filter test, separate them with a comma.
+    - This will treat them like "and" statements.
+    - Alternatively, you could use the `&` symbol.
+- You cannot avoid `summarize`.
+- The function `sum` may be useful.
+- Type `?sum` into the Console if you would like to review the documentation on this function.
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+## Task 04
+
+Which city had more total homes sold after 2013, Abilene or Austin?
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+# I'm leaving Abilene, tonight
+
+This is for all the Carolyn Carter fans out there (can't find the original).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C2oUbDd3Jn8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Task 05
+
+Calculate the total number of homes sold for all cities in each year.
+
+- This will make a new data frame with a cit/year grain.
+- Save this as a new data frame called txcities.
+- Make sure you look at your data to confirm that you have transformed it correctly.
+- You can copy/paste the code from your code-chunk to Canvas.
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+## Task 06
+
+Plot the data from txcities, but only plot those cities with more than 10,000 homes sold in a year. Otherwise, your plot will be cluttered.
+
+- Yes, you will need to filter txcities before plotting it.
+    - You can handle this in a single statement or you can create a third data set.
+- Since this is a time series and not a scatter plot, you will need to draw a line, not points.
+    - `geom_line()` is your friend here.
+    - Otherwise, the x/y axes should be familiar.
+    - To draw a separate line for each city, assign the city column to color in your `aes()`.
+- Download your plot from here, to upload to Canvas.
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+## Task 07
+
+I hope you got a graph that shows some high points in 2006, followed by a steep decline. Can you explain what happened between 2008 and 2010 in the housing market? (Hint: this trend was much bigger than the Texas housing market.)
+
+## Task 08
+
+Plot the median house value of homes sold in Houston from 2006 to 2012.
+
+- Another time series, another `geom_line`.
+- Your x axis must be the `date` column.
+- You will need to filter, you will not need to transform this data set.
+- Download the plot from RStudio and upload to Canvas.
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+## Task 09
+
+On average, which month has the highest number of sales in Houston?
+
+```{r}
+## YOUR CODE HERE!
+
+```
+
+
+## Task 10
+
+The summary statistic representing the value per home sold is the median value. Why not use the average?
+
+- [Wikipedia: Median](https://en.wikipedia.org/wiki/Median)
