@@ -45,30 +45,32 @@ knitr::include_graphics("includes/preview.png")
 
 Run the code-chunk below to load everything you need for tonight's lecture.
 
-```{r}
-rm(list = ls()) ## Deletes anything you may have created earlier, freeing up RAM.
-library(gapminder)
+```{r setup, message=FALSE, warning=FALSE}
+rm(list = ls())
 library(knitr)
 library(tidyverse)
 
-## Show all the code from here down.
-opts_chunk$set(echo = TRUE)
-
 ## Disables scientific notation.
-options(scipen=999)
+options(scipen = 999)
 
 ## This is a subset of the data from the gapminder presentation above.
-data(gapminder)
-gapminder
+gapminder <- read_csv("data/gapminder.csv")
 ```
 
+# Gapminder Data
+
+```{r}
+gapminder
+```
 
 # Distinct!!!
 
 Sometimes, we want to know the distinct values of a column.
 
 ```{r}
-gapminder %>% select(continent) %>% distinct()
+gapminder %>%
+  select(continent) %>%
+  distinct()
 ```
 
 **Note:** Antarctica isn't on our list and North and South America are squished together. 🤷 So, what do these new functions do?
@@ -80,7 +82,9 @@ gapminder %>% select(continent) %>% distinct()
     - This is SIMILAR to . . . .
 
 ```{r}
-gapminder %>% group_by(continent) %>% count()
+gapminder %>%
+  group_by(continent) %>%
+  count()
 ```
 
 - These two code chunks are similar in terms of complexity.
@@ -116,7 +120,7 @@ How many people lived in each continent in 2007?
 
 ```{r}
 ## YOUR CODE HERE!
-cnt07 <- 
+cnt07 <-
   gapminder %>%
   group_by(continent) %>%
   summarize(tot_pop = sum(pop)) ## NOTE: You can spell this either way.
@@ -185,21 +189,23 @@ For example, we can add a percent column to `cnt07`
 ```{r}
 cnt07 <-
   cnt07 %>%
-  mutate(prc_pop = 100*tot_pop/sum(tot_pop))
+  mutate(prc_pop = 100 * tot_pop / sum(tot_pop))
 cnt07
 ```
 
 You can also use mutate to create new groupings:
 
 ```{r}
-nato_members <- c("Albania", "Belgium", "Bulgaria", "Canada", "Croatia",
-                  "Czech Republic", "Denmark", "Estonia", "France", "Germany",
-                  "Greece", "Hungary", "Iceland", "Italy", "Latvia",
-                  "Lithuania", "Luxembourg", "Montenegro", "Netherlands",
-                  "North Macedonia", "Norway", "Poland", "Portugal", "Romania",
-                  "Slovak Republic", "Slovenia", "Spain", "Turkey",
-                  "United Kingdom", "United States")
-gapminder <- 
+nato_members <- c(
+  "Albania", "Belgium", "Bulgaria", "Canada", "Croatia",
+  "Czech Republic", "Denmark", "Estonia", "France", "Germany",
+  "Greece", "Hungary", "Iceland", "Italy", "Latvia",
+  "Lithuania", "Luxembourg", "Montenegro", "Netherlands",
+  "North Macedonia", "Norway", "Poland", "Portugal", "Romania",
+  "Slovak Republic", "Slovenia", "Spain", "Turkey",
+  "United Kingdom", "United States"
+)
+gapminder <-
   gapminder %>%
   mutate(nato = if_else(country %in% nato_members, TRUE, FALSE))
 
@@ -229,19 +235,18 @@ It  might be nice to better understand the relationship between these two variab
 - We will use ALL gapminder countries, not just those from Nato.
 
 ```{r}
-lm_model <- 
-  gapminder %>% 
-  filter(year == 1992) %>% 
-  lm(lifeExp~gdpPercap, data = .)
+lm_model <-
+  gapminder %>%
+  filter(year == 1992) %>%
+  lm(lifeExp ~ gdpPercap, data = .)
 summary(lm_model)
 
-gapminder %>% 
-  filter(year == 1992) %>% 
-  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) + 
+gapminder %>%
+  filter(year == 1992) %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) +
   geom_point(show.legend = FALSE) +
   theme() +
   theme_bw()
-
 ```
 
 - The "linear" regression summary looks good.
@@ -253,23 +258,22 @@ gapminder %>%
 - [Wikipedia Anscombe's Quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet)
 
 ```{r}
-gapminder <- 
-  gapminder %>% 
+gapminder <-
+  gapminder %>%
   mutate(logLifeExp = log(lifeExp), logGdpPercap = log(gdpPercap))
 
-lm_model <- 
-  gapminder %>% 
-  filter(year == 1992) %>% 
-  lm(logLifeExp~logGdpPercap, data = .)
+lm_model <-
+  gapminder %>%
+  filter(year == 1992) %>%
+  lm(logLifeExp ~ logGdpPercap, data = .)
 summary(lm_model)
 
-gapminder %>% 
-  filter(year == 1992) %>% 
-  ggplot(aes(x = logGdpPercap, y = logLifeExp, size = pop, color = country)) + 
+gapminder %>%
+  filter(year == 1992) %>%
+  ggplot(aes(x = logGdpPercap, y = logLifeExp, size = pop, color = country)) +
   geom_point(show.legend = FALSE) +
   theme() +
   theme_bw()
-
 ```
 
 That's better.

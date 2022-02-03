@@ -7,36 +7,42 @@ output: html_notebook
 
 An opportunity to practice some grouping, sorting, and mutating.
 
-# Setup
+# Task 00 - Setup
 
-Run the code-chunk below to load everything you need for tonight's lab.
+- Complete the code chunk below to start tonight's lab.
+- Then, run the code-chunk below to get started.
+- Look at tonight's lecture if you feel stumped.
+- This task is not connected to any of the questions on Canvas, although obviously completion is a prerequisite.
 
-```{r}
-rm(list = ls()) ## Deletes anything you may have created earlier, freeing up RAM.
+```{r setup, message=FALSE, warning=FALSE}
+rm(list = ls())
 library(knitr)
 library(tidyverse)
-
-## Show all the code from here down.
-opts_chunk$set(echo = TRUE)
 
 ## Disables scientific notation.
 options(scipen=999)
 
-## This is a subset of the data from the gapminder presentation above.
-data(txhousing)
+txhousing <- ?
+```
+
+# Data
+
+- Look at our data. What is the grain?
+
+```{r}
 txhousing
 ```
 
 
-Each row of data information on a single month's worth of sales. So, we could say this is data is at the city/month grain.
-
-- For more help on the data `?txhousing` in the console pane.
 
 # Abilene
 
 ## Task 01
 
-How many rows of data do we have about Abilene Texas?
+- **Question:** How many rows of data do we have about Abilene Texas?
+- **Answer:** 
+
+Helpful Hints:
 
 - Think about `filter()`
 - Remember to wrap your string in quotes.
@@ -49,7 +55,10 @@ How many rows of data do we have about Abilene Texas?
 
 ## Task 02
 
-In what year/month did Abilene have the highest volume of sales?
+- **Question:** In what year/month did Abilene have the highest volume of sales?
+- **Answer:**
+
+Helpful Hints:
 
 - This is easier if you used `filter()` for Task 01.
 - If you did, you only need to add one thing to your Task 01 code to answer this question.
@@ -61,7 +70,10 @@ In what year/month did Abilene have the highest volume of sales?
 
 ## Task 03
 
-How many houses (total) were sold in Abilene in 2010?
+- **Question:** How many houses (total) were sold in Abilene in 2010?
+- **Answer:**
+
+Helpful Hints:
 
 - To solve this, you will have to change the grain of the data.
 - You can solve this problem with either `filter` or `group_by`, although `filter` is arguably more elegant.
@@ -79,7 +91,8 @@ How many houses (total) were sold in Abilene in 2010?
 
 ## Task 04
 
-Which city had more total homes sold after 2013, Abilene or Austin?
+- **Question:** Which city had more total homes sold after 2013, Abilene or Austin?
+- **Answer:**
 
 ```{r}
 ## YOUR CODE HERE!
@@ -94,9 +107,12 @@ This is for all the Carolyn Carter fans out there (can't find the original).
 
 ## Task 05
 
-Calculate the total number of homes sold for all cities in each year.
+- **Question:** How many homes were sold in each city in each year?
+- **Answer:**
 
-- This will make a new data frame with a cit/year grain.
+Helpful Hints:
+
+- Create a new data frame with a city/year grain.
 - Save this as a new data frame called txcities.
 - Make sure you look at your data to confirm that you have transformed it correctly.
 - You can copy/paste the code from your code-chunk to Canvas.
@@ -108,7 +124,10 @@ Calculate the total number of homes sold for all cities in each year.
 
 ## Task 06
 
-Plot the data from txcities, but only plot those cities with more than 10,000 homes sold in a year. Otherwise, your plot will be cluttered.
+- **Question:** Plot the data from txcities, but only plot those cities with more than 10,000 homes sold in a year. Otherwise, your plot will be cluttered.
+- **Answer:** Upload to Canvas.
+
+Helpful Hints:
 
 - Yes, you will need to filter txcities before plotting it.
     - You can handle this in a single statement or you can create a third data set.
@@ -125,11 +144,15 @@ Plot the data from txcities, but only plot those cities with more than 10,000 ho
 
 ## Task 07
 
-I hope you got a graph that shows some high points in 2006, followed by a steep decline. Can you explain what happened between 2008 and 2010 in the housing market? (Hint: this trend was much bigger than the Texas housing market.)
+- **Question:** I hope you got a graph that shows some high points in 2006, followed by a steep decline. Can you explain what happened between 2008 and 2010 in the housing market? (Hint: this trend was much bigger than the Texas housing market.)
+- **Answer:** 
 
 ## Task 08
 
-Plot the median house value of homes sold in Houston from 2006 to 2012.
+- **Question:** Plot the median house value of homes sold in Houston from 2006 to 2012.
+- **Answer:** Upload to Canvas.
+
+Helpful Hints:
 
 - Another time series, another `geom_line`.
 - Your x axis must be the `date` column.
@@ -143,16 +166,19 @@ Plot the median house value of homes sold in Houston from 2006 to 2012.
 
 ## Task 09
 
-On average, which month has the highest number of sales in Houston?
+- **Question:** On average, which month has the highest number of sales in Houston?
+- **Answer:** 
 
 ```{r}
 ## YOUR CODE HERE!
 
 ```
 
-
 ## Task 10
 
-The summary statistic representing the value per home sold is the median value. Why not use the average?
+- **Question:** The summary statistic representing the value per home sold is the median value. Why not use the average?
+- **Answer:** 
+
+Helpful Hint:
 
 - [Wikipedia: Median](https://en.wikipedia.org/wiki/Median)
