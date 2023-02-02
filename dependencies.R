@@ -1,8 +1,11 @@
 ## Simple script used to install all packages needed by the lecture/lab.
 
 p <- c(
-    "knitr",
-    "markdown",
-    "tidyverse"
+  "knitr",
+  "markdown",
+  "rio",
+  "rmarkdown",
+  "shiny",
+  "tidyverse"
 )
 install.packages(p)

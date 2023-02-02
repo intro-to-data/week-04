@@ -12,6 +12,15 @@ output:
     theme: cerulean
 ---
 
+# Hans Rosling
+
+If you have not yet watched [this Hans Rosling video](https://www.youtube.com/embed/Z8t4k0Q8e8Y) yet, please pause this video and do so.
+
+- [Hans Rosling died in 2017 at the age of 68](https://en.wikipedia.org/wiki/Hans_Rosling) and thus did not live through the COVID-19 pandemic.
+- Beyond his awesome accent, I think he does something really powerful in that video.
+- He engages you in the data. He takes thousands of lines of data and uses it to tell a story.
+- I hope we can use our time together to start down that path of you learning how to (carefully) use data to tell stories.
+
 # Goals
 
 - In the last three weeks, we have discussed a lot of new ideas/concepts.
@@ -26,18 +35,10 @@ output:
     - `arrange`
 - New ideas for tonight:
     - Create new columns: `mutate()`
-    - Linear Regression and t-tests
+    - Linear Regression
     - Honestly, mostly review.
 
-# Hans Rosling
-
-If you've never heard of Hans Rosling, let me immediately correct that educational oversight. He recorded a number of terrific videos before passing in 2017. This video, which is only four minutes, is one of his best. The easiest way to view this video is to hit the `Preview` button at the top of the editor. This will render this notebook as an HTML file and will embed the YouTube video in-line.
-
-```{r fig.align='center'}
-knitr::include_graphics("includes/preview.png")
-```
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Z8t4k0Q8e8Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Tonight's lecture is FULL of opportunities for you to practice. I STRONGLY recommend you pause the video and genuinely try to complete these mini-challenges. This lecture is available on Posit Cloud.
 
 
 
@@ -46,15 +47,17 @@ knitr::include_graphics("includes/preview.png")
 Run the code-chunk below to load everything you need for tonight's lecture.
 
 ```{r setup, message=FALSE, warning=FALSE}
-rm(list = ls())
 library(knitr)
+library(rio)
 library(tidyverse)
 
 ## Disables scientific notation.
+## This is useful below.
 options(scipen = 999)
 
 ## This is a subset of the data from the gapminder presentation above.
-gapminder <- read_csv("data/gapminder.csv")
+## https://www.gapminder.org/
+gapminder <- import("data/gapminder.csv")
 ```
 
 # Gapminder Data
@@ -65,15 +68,21 @@ gapminder
 
 # Distinct!!!
 
-Sometimes, we want to know the distinct values of a column.
+It is often useful to know the distinct values of a column.
 
 ```{r}
-gapminder %>%
-  select(continent) %>%
+gapminder |>
+  select(continent) |>
   distinct()
 ```
 
-**Note:** Antarctica isn't on our list and North and South America are squished together. 🤷 So, what do these new functions do?
+**Notes:** 
+
+- Antarctica isn't shown. 
+- North and South America are squished together. 
+- 🤷 
+
+So, what do these new functions do?
 
 - `select()` chooses which columns to keep.
     - This can also be used to drop columns and rearrange columns.
@@ -82,8 +91,8 @@ gapminder %>%
     - This is SIMILAR to . . . .
 
 ```{r}
-gapminder %>%
-  group_by(continent) %>%
+gapminder |>
+  group_by(continent) |>
   count()
 ```
 
@@ -117,12 +126,14 @@ How many people lived in each continent in 2007?
 
 - Create a new tibble called `cnt07` to hold this new data.
 - Create a column called `tot_pop` to hold you summary statistic.
+- Note: You can use these verbs to create NEW data sets.
+    - This is important!
+    - This is going to be on the midterm/final!!! (HINT!)
 
 ```{r}
-## YOUR CODE HERE!
 cnt07 <-
-  gapminder %>%
-  group_by(continent) %>%
+  gapminder |>
+  group_by(continent) |>
   summarize(tot_pop = sum(pop)) ## NOTE: You can spell this either way.
 cnt07
 ```
@@ -188,7 +199,7 @@ For example, we can add a percent column to `cnt07`
 
 ```{r}
 cnt07 <-
-  cnt07 %>%
+  cnt07 |>
   mutate(prc_pop = 100 * tot_pop / sum(tot_pop))
 cnt07
 ```
@@ -206,12 +217,12 @@ nato_members <- c(
   "United Kingdom", "United States"
 )
 gapminder <-
-  gapminder %>%
+  gapminder |>
   mutate(nato = if_else(country %in% nato_members, TRUE, FALSE))
 
-gapminder %>%
-  filter(nato) %>%
-  select(country) %>%
+gapminder |>
+  filter(nato) |>
+  select(country) |>
   distinct()
 ```
 Our data lacks data for Estonia, Latvia, Lithuania, Luxembourg, North Macedonia.
@@ -236,13 +247,13 @@ It  might be nice to better understand the relationship between these two variab
 
 ```{r}
 lm_model <-
-  gapminder %>%
-  filter(year == 1992) %>%
+  gapminder |>
+  filter(year == 1992) |>
   lm(lifeExp ~ gdpPercap, data = .)
 summary(lm_model)
 
-gapminder %>%
-  filter(year == 1992) %>%
+gapminder |>
+  filter(year == 1992) |>
   ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) +
   geom_point(show.legend = FALSE) +
   theme() +
@@ -259,17 +270,17 @@ gapminder %>%
 
 ```{r}
 gapminder <-
-  gapminder %>%
+  gapminder |>
   mutate(logLifeExp = log(lifeExp), logGdpPercap = log(gdpPercap))
 
 lm_model <-
-  gapminder %>%
-  filter(year == 1992) %>%
+  gapminder |>
+  filter(year == 1992) |>
   lm(logLifeExp ~ logGdpPercap, data = .)
 summary(lm_model)
 
-gapminder %>%
-  filter(year == 1992) %>%
+gapminder |>
+  filter(year == 1992) |>
   ggplot(aes(x = logGdpPercap, y = logLifeExp, size = pop, color = country)) +
   geom_point(show.legend = FALSE) +
   theme() +

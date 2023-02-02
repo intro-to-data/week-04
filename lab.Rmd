@@ -5,7 +5,8 @@ date: "Week 04"
 output: html_notebook
 ---
 
-An opportunity to practice some grouping, sorting, and mutating.
+- An opportunity to practice some grouping, sorting, and mutating.
+- Starting this week, I'd like you to pick a friend and work on the lab together rather than as a class.
 
 # Task 00 - Setup
 
@@ -15,7 +16,6 @@ An opportunity to practice some grouping, sorting, and mutating.
 - This task is not connected to any of the questions on Canvas, although obviously completion is a prerequisite.
 
 ```{r setup, message=FALSE, warning=FALSE}
-rm(list = ls())
 library(knitr)
 library(tidyverse)
 
