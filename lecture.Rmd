@@ -2,24 +2,8 @@
 title: "Review"
 author: "Intro to Data Science"
 date: "Week 04"
-output: 
-  html_notebook:
-    toc: true
-    toc_float:
-      toc_collapsed: true
-    toc_depth: 3
-    number_sections: true
-    theme: cerulean
+format: html
 ---
-
-# Hans Rosling
-
-If you have not yet watched [this Hans Rosling video](https://www.youtube.com/embed/Z8t4k0Q8e8Y) yet, please pause this video and do so.
-
-- [Hans Rosling died in 2017 at the age of 68](https://en.wikipedia.org/wiki/Hans_Rosling) and thus did not live through the COVID-19 pandemic.
-- Beyond his awesome accent, I think he does something really powerful in that video.
-- He engages you in the data. He takes thousands of lines of data and uses it to tell a story.
-- I hope we can use our time together to start down that path of you learning how to (carefully) use data to tell stories.
 
 # Goals
 
@@ -40,13 +24,16 @@ If you have not yet watched [this Hans Rosling video](https://www.youtube.com/em
 
 Tonight's lecture is FULL of opportunities for you to practice. I STRONGLY recommend you pause the video and genuinely try to complete these mini-challenges. This lecture is available on Posit Cloud.
 
-
+TODO: Do I want to replace this with our class survey data?
 
 # Setup
 
 Run the code-chunk below to load everything you need for tonight's lecture.
 
-```{r setup, message=FALSE, warning=FALSE}
+```{r setup}
+#| message=FALSE
+#| warning=FALSE
+
 library(knitr)
 library(rio)
 library(tidyverse)
