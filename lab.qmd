@@ -6,7 +6,6 @@ output: html_notebook
 ---
 
 - An opportunity to practice some grouping, sorting, and mutating.
-- Starting this week, I'd like you to pick a friend and work on the lab together rather than as a class.
 
 # Task 00 - Setup
 
@@ -22,6 +21,7 @@ library(tidyverse)
 ## Disables scientific notation.
 options(scipen=999)
 
+## How do we import our data?
 txhousing <- ?
 ```
 

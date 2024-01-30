@@ -24,7 +24,7 @@ format: html
 
 Tonight's lecture is FULL of opportunities for you to practice. I STRONGLY recommend you pause the video and genuinely try to complete these mini-challenges. This lecture is available on Posit Cloud.
 
-TODO: Do I want to replace this with our class survey data?
+
 
 # Setup
 
