@@ -14,7 +14,7 @@ output: html_notebook
 - Look at tonight's lecture if you feel stumped.
 - This task is not connected to any of the questions on Canvas, although obviously completion is a prerequisite.
 
-```{r setup, message=FALSE, warning=FALSE}
+```{r}
 library(knitr)
 library(rio)
 library(tidyverse)
@@ -23,7 +23,7 @@ library(tidyverse)
 options(scipen=999)
 
 ## How do we import our data?
-txhousing <- ?
+txhousing <- read_csv("data/txhousing.csv")
 ```
 
 # Data
@@ -50,8 +50,9 @@ Helpful Hints:
 - You must use `==` to perform a Boolean test!
 
 ```{r}
-## YOUR CODE HERE!
+txhousing |> filter(city == "Abilene")
 
+txhousing |> count(city)
 ```
 
 ## Task 02
@@ -65,8 +66,7 @@ Helpful Hints:
 - If you did, you only need to add one thing to your Task 01 code to answer this question.
 
 ```{r}
-## YOUR CODE HERE!
-
+txhousing |> filter(city == "Abilene") |> arrange(desc(volume))
 ```
 
 ## Task 03
@@ -86,8 +86,13 @@ Helpful Hints:
 - Type `?sum` into the Console if you would like to review the documentation on this function.
 
 ```{r}
-## YOUR CODE HERE!
-
+txhousing |>
+  filter(city == "Abilene", year == 2010) |>
+  summarize(
+    total_sales = sum(sales),
+    avg_sales = mean(sales),
+    total_listings = sum(listings)
+    )
 ```
 
 ## Task 04
@@ -96,8 +101,12 @@ Helpful Hints:
 - **Answer:**
 
 ```{r}
-## YOUR CODE HERE!
-
+txhousing |>
+  filter(year > 2013) |>
+  group_by(city) |>
+  summarize(
+    total_sales = sum(sales, na.rm = TRUE)
+    )
 ```
 
 # I'm leaving Abilene, tonight
@@ -119,8 +128,13 @@ Helpful Hints:
 - You can copy/paste the code from your code-chunk to Canvas.
 
 ```{r}
-## YOUR CODE HERE!
-
+txcities <- 
+  txhousing |>
+  group_by(city, year) |>
+  summarize(
+    total_sales = sum(sales, na.rm = TRUE)
+    )
+txcities
 ```
 
 ## Task 06
@@ -139,14 +153,16 @@ Helpful Hints:
 - Download your plot from here, to upload to Canvas.
 
 ```{r}
-## YOUR CODE HERE!
-
+txcities |>
+  filter(total_sales > 10000) |>
+  ggplot(aes(x = year, y = total_sales, color = city)) +
+  geom_line()
 ```
 
 ## Task 07
 
 - **Question:** I hope you got a graph that shows some high points in 2006, followed by a steep decline. Can you explain what happened between 2008 and 2010 in the housing market? (Hint: this trend was much bigger than the Texas housing market.)
-- **Answer:** 
+- **Answer:** The 2008 economic crash.
 
 ## Task 08
 
@@ -161,8 +177,10 @@ Helpful Hints:
 - Download the plot from RStudio and upload to Canvas.
 
 ```{r}
-## YOUR CODE HERE!
-
+txhousing |>
+  filter(city == "Houston", year >= 2006, year <= 2012) |>
+  ggplot(aes(x = date, y = median, color = city)) +
+  geom_line()
 ```
 
 ## Task 09
@@ -171,7 +189,11 @@ Helpful Hints:
 - **Answer:** 
 
 ```{r}
-## YOUR CODE HERE!
+txhousing |>
+  filter(city == "Houston") |>
+  group_by(month) |>
+  summarize(avg_sales = mean(sales)) |>
+  arrange(desc(avg_sales))
 
 ```
 

@@ -10,3 +10,5 @@ p <- c(
   "tidyverse"
 )
 install.packages(p)
+
+unlink("lab-answers.qmd")
